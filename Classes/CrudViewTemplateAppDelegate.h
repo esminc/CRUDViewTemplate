@@ -13,6 +13,8 @@
     NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
     UIWindow *window;
+    
+    IBOutlet UINavigationController *navigationController;
 }
 
 - (IBAction)saveAction:sender;

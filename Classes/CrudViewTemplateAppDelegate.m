@@ -8,6 +8,7 @@
 
 #import "CrudViewTemplateAppDelegate.h"
 
+#import "CrudListViewController.h"
 
 @implementation CrudViewTemplateAppDelegate
 
@@ -19,9 +20,40 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {    
     
-    // Override point for customization after app launch    
-
+    CrudListViewController *crudListViewController = [[CrudListViewController alloc] init];
+    
+    // Create the fetch request for the entity.
+	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	// Edit the entity name as appropriate.
+	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+	[fetchRequest setEntity:entity];
+	
+	// Edit the sort key as appropriate.
+	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:YES];
+	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+	
+	[fetchRequest setSortDescriptors:sortDescriptors];
+	
+	// Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
+    // aFetchedResultsController.delegate = self;
+	
+    crudListViewController.fetchedResultsController = aFetchedResultsController;
+    
+    [navigationController pushViewController:crudListViewController animated:YES];
+    
+    NSManagedObject *event = (NSManagedObject *)[NSEntityDescription insertNewObjectForEntityForName: @"Event" inManagedObjectContext: self.managedObjectContext];
+    [event setValue:@"HOGE FUGA" forKey:@"title"];
+    [event setValue:[NSDate date] forKey:@"timeStamp"];
+    
+    [window addSubview:[navigationController view]];
 	[window makeKeyAndVisible];
+
+	[aFetchedResultsController release];
+	[fetchRequest release];
+	[sortDescriptor release];
+	[sortDescriptors release];
 }
 
 /**
