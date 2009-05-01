@@ -20,6 +20,7 @@
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 
+- (NSArray *)attributeNames;
 - (NSArray *)attributeShowingOrder;
 - (NSArray *)attributeShowingNames;
 

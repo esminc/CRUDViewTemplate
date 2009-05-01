@@ -20,7 +20,7 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {    
     
-    ListedCrudViewController *crudViewController = [[ListedCrudViewController alloc] init];
+    ListedCrudViewController *listViewController = [[ListedCrudViewController alloc] init];
     
     // Create the fetch request for the entity.
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
@@ -39,9 +39,9 @@
 	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
     // aFetchedResultsController.delegate = self;
 	
-    crudViewController.fetchedResultsController = aFetchedResultsController;
+    listViewController.fetchedResultsController = aFetchedResultsController;
     
-    [navigationController pushViewController:crudViewController animated:YES];
+    [navigationController pushViewController:listViewController animated:YES];
     
     NSManagedObject *event = (NSManagedObject *)[NSEntityDescription insertNewObjectForEntityForName: @"Event" inManagedObjectContext: self.managedObjectContext];
     [event setValue:@"HOGE FUGA" forKey:@"title"];

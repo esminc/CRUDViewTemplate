@@ -88,10 +88,8 @@
     }
     
 	// Configure the cell.
-
-	NSManagedObject *managedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
-
-	cell.textLabel.text = [[managedObject valueForKey:@"title"] description];
+    NSManagedObject *managedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    cell.textLabel.text = [[managedObject valueForKey:[[self attributeNames] objectAtIndex:0]] description];
 	
     return cell;
 }
@@ -114,12 +112,36 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
+- (NSArray *)attributes {
+    NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
+
+    NSMutableArray *attributes = [[[NSMutableArray alloc] init] autorelease];
+    for(NSPropertyDescription *property in [entity properties]) {
+        if ([property isKindOfClass:[NSAttributeDescription class]]) {
+            [attributes addObject:property];
+        }
+    }
+    
+    return attributes;
+}
+
+- (NSArray *)attributeNames {
+    NSMutableArray *attributeNames = [[[NSMutableArray alloc] init] autorelease];
+    for (NSAttributeDescription *attribute in [self attributes]) {
+        [attributeNames addObject:[attribute name]];
+    }
+    
+    return attributeNames;
+}
+
 - (NSArray *)attributeShowingOrder {
-    return [NSArray arrayWithObjects:@"title", @"timeStamp", nil];
+    // return [NSArray arrayWithObjects:@"title", @"Time Stamp", nil];
+    return [self attributeNames];
 }
 
 - (NSArray *)attributeShowingNames {
-    return [NSArray arrayWithObjects:@"Title", @"Time Stamp", nil];
+    // return [NSArray arrayWithObjects:@"Title", @"Time Stamp", nil];
+    return nil;
 }
 
 - (void)dealloc {
@@ -184,6 +206,18 @@
     NSArray *order;
     if (order = [listedViewController attributeShowingOrder]) {
         return [order objectAtIndex:section];
+    } else {
+        NSArray *attributes = [listedViewController attributes];
+        return [[attributes objectAtIndex:section] name];
+    }
+}
+
+#pragma mark Table view methods
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    NSArray *order;
+    if (order = [listedViewController attributeShowingOrder]) {
+        return [order count];
     }
 
     NSEntityDescription *entity = [managedObject entity];
@@ -195,15 +229,7 @@
         }
     }
     
-    NSString *attributeName = [[attributes objectAtIndex:section] name];
-    
-    return attributeName;
-}
-
-#pragma mark Table view methods
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return [attributes count];
 }
 
 //- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
