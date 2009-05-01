@@ -16,7 +16,6 @@
 		28C3AD8A0F43EF2300507BA6 /* CrudViewTemplate.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 28C3AD890F43EF2300507BA6 /* CrudViewTemplate.xcdatamodel */; };
 		28D801B40F44B63D00FB423F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28D801B30F44B63D00FB423F /* CoreData.framework */; };
 		BC2AEF330FA689FD0029E350 /* CrudViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2AEF300FA689FD0029E350 /* CrudViewController.m */; };
-		BC2AEF340FA689FD0029E350 /* DetailedCrudViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC2AEF320FA689FD0029E350 /* DetailedCrudViewController.m */; };
 		BC2AEF3A0FA68A100029E350 /* CrudViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BC2AEF390FA68A100029E350 /* CrudViewController.xib */; };
 /* End PBXBuildFile section */
 
@@ -35,8 +34,6 @@
 		8D1107310486CEB800E47090 /* CrudViewTemplate-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CrudViewTemplate-Info.plist"; sourceTree = "<group>"; };
 		BC2AEF2F0FA689FD0029E350 /* CrudViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrudViewController.h; sourceTree = "<group>"; };
 		BC2AEF300FA689FD0029E350 /* CrudViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrudViewController.m; sourceTree = "<group>"; };
-		BC2AEF310FA689FD0029E350 /* DetailedCrudViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailedCrudViewController.h; sourceTree = "<group>"; };
-		BC2AEF320FA689FD0029E350 /* DetailedCrudViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailedCrudViewController.m; sourceTree = "<group>"; };
 		BC2AEF390FA68A100029E350 /* CrudViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CrudViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,8 +57,6 @@
 			children = (
 				BC2AEF2F0FA689FD0029E350 /* CrudViewController.h */,
 				BC2AEF300FA689FD0029E350 /* CrudViewController.m */,
-				BC2AEF310FA689FD0029E350 /* DetailedCrudViewController.h */,
-				BC2AEF320FA689FD0029E350 /* DetailedCrudViewController.m */,
 				1D3623240D0F684500981E51 /* CrudViewTemplateAppDelegate.h */,
 				1D3623250D0F684500981E51 /* CrudViewTemplateAppDelegate.m */,
 			);
@@ -177,7 +172,6 @@
 				1D3623260D0F684500981E51 /* CrudViewTemplateAppDelegate.m in Sources */,
 				28C3AD8A0F43EF2300507BA6 /* CrudViewTemplate.xcdatamodel in Sources */,
 				BC2AEF330FA689FD0029E350 /* CrudViewController.m in Sources */,
-				BC2AEF340FA689FD0029E350 /* DetailedCrudViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

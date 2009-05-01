@@ -20,7 +20,7 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {    
     
-    CrudViewController *crudViewController = [[CrudViewController alloc] init];
+    ListedCrudViewController *crudViewController = [[ListedCrudViewController alloc] init];
     
     // Create the fetch request for the entity.
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];

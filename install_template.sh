@@ -1,8 +1,8 @@
-# delete old generated files
-rm -rf ~/Library/Application\ Support/Xcode/File\ Templates/Cocoa\ Touch\ Class/CRUDViewController\ subclass.pbfiletemplate
+# uninstall templates
+./uninstall_template.sh
 
 # make directory
-mkdir -p ~/Library/Application\ Support/Xcode/File\ Templates/Cocoa\ Touch\ Class/
+mkdir -p ~/Library/Application\ Support/Developer/Shared/Xcode/File\ Templates/Cocoa\ Touch\ Class/
 
 # copy built files
-cp -r CrudViewController\ subclass.pbfiletemplate ~/Library/Application\ Support/Xcode/File\ Templates/Cocoa\ Touch\ Class
+cp -r CrudViewController\ subclass.pbfiletemplate ~/Library/Application\ Support/Developer/Shared/Xcode/File\ Templates/Cocoa\ Touch\ Class
