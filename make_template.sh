@@ -2,7 +2,7 @@
 rm -rf CrudViewController\ subclass
 
 # copy files from base
-cp -r CrudViewController\ subclass\ base CrudViewController\ subclass
+cp -r CrudViewController\ subclass\ base CrudViewController\ subclass.pbfiletemplate
 
 # generate templates
 cat Classes/CrudViewController.h | ./to_template.rb > CrudViewController\ subclass.pbfiletemplate/class.h
