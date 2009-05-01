@@ -1,15 +1,15 @@
 //
-//  CrudDetailViewController.m
-//  CrudView
+//  «FILENAME»
+//  «PROJECTNAME»
 //
-//  Created by MORITA Hideyuki on 09/04/27.
-//  Copyright 2009 Eiwa System Management, Inc. All rights reserved.
+//  Created by «FULLUSERNAME» on «DATE».
+//  Copyright «YEAR» «ORGANIZATIONNAME». All rights reserved.
 //
 
-#import "CrudDetailViewController.h"
+#import "DetailedCrudViewController.h"
 
 
-@implementation CrudDetailViewController
+@implementation DetailedCrudViewController
 
 @synthesize managedObject;
 
@@ -113,7 +113,7 @@
     int section = [indexPath section];
     // int row = [indexPath row];
    
-    cell.text = [[managedObject valueForKey:[self attributeNameAtSectionIndex:section]] description];
+    cell.textLabel.text = [[managedObject valueForKey:[self attributeNameAtSectionIndex:section]] description];
 	
     return cell;
 }

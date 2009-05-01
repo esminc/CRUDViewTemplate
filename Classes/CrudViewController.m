@@ -1,16 +1,16 @@
 //
-//  CrudListViewController.m
-//  CrudView
+//  «FILENAME»
+//  «PROJECTNAME»
 //
-//  Created by MORITA Hideyuki on 09/04/27.
-//  Copyright 2009 Eiwa System Management, Inc. All rights reserved.
+//  Created by «FULLUSERNAME» on «DATE».
+//  Copyright «YEAR» «ORGANIZATIONNAME». All rights reserved.
 //
 
-#import "CrudListViewController.h"
+#import "CrudViewController.h"
 
-#import "CrudDetailViewController.h"
+#import "DetailedCrudViewController.h"
 
-@implementation CrudListViewController
+@implementation CrudViewController
 
 @synthesize fetchedResultsController;
 
@@ -100,14 +100,14 @@
 	// [self.navigationController pushViewController:anotherViewController];
 	// [anotherViewController release];
     
-    // CrudDetailViewController *CrudDetailViewController = [[CrudDetailViewController alloc] initWithNibName:@"CrudDetailViewController" bundle:nil];
-    // CrudDetailViewController.managedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+    // DetailedCrudViewController *DetailedCrudViewController = [[DetailedCrudViewController alloc] initWithNibName:@"DetailedCrudViewController" bundle:nil];
+    // DetailedCrudViewController.managedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
     
     detailViewController.managedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
     
     [self.navigationController pushViewController:detailViewController animated:YES];
     
-    // [CrudDetailViewController release];
+    // [DetailedCrudViewController release];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
