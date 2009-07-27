@@ -23,37 +23,32 @@
     ListedCrudViewController *listViewController = [[ListedCrudViewController alloc] init];
     
     // Create the fetch request for the entity.
-	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+	NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
 	// Edit the entity name as appropriate.
-	NSEntityDescription *entity = [NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext];
+	NSEntityDescription *entity = [[NSEntityDescription entityForName:@"Event" inManagedObjectContext:self.managedObjectContext] autorelease];
 	[fetchRequest setEntity:entity];
 	
 	// Edit the sort key as appropriate.
-	NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:YES];
-	NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+	NSSortDescriptor *sortDescriptor = [[[NSSortDescriptor alloc] initWithKey:@"timeStamp" ascending:YES] autorelease];
+	NSArray *sortDescriptors = [[[NSArray alloc] initWithObjects:sortDescriptor, nil] autorelease];
 	
 	[fetchRequest setSortDescriptors:sortDescriptors];
 	
 	// Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-	NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
+	NSFetchedResultsController *aFetchedResultsController = [[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"] autorelease];
     // aFetchedResultsController.delegate = self;
 	
     listViewController.fetchedResultsController = aFetchedResultsController;
     
     [navigationController pushViewController:listViewController animated:YES];
     
-    NSManagedObject *event = (NSManagedObject *)[NSEntityDescription insertNewObjectForEntityForName: @"Event" inManagedObjectContext: self.managedObjectContext];
-    [event setValue:@"HOGE FUGA" forKey:@"title"];
-    [event setValue:[NSDate date] forKey:@"timeStamp"];
+    // NSManagedObject *event = (NSManagedObject *)[NSEntityDescription insertNewObjectForEntityForName: @"Event" inManagedObjectContext: self.managedObjectContext];
+    // [event setValue:@"HOGE FUGA" forKey:@"title"];
+    // [event setValue:[NSDate date] forKey:@"timeStamp"];
     
     [window addSubview:[navigationController view]];
 	[window makeKeyAndVisible];
-
-	[aFetchedResultsController release];
-	[fetchRequest release];
-	[sortDescriptor release];
-	[sortDescriptors release];
 }
 
 /**
