@@ -42,7 +42,7 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrameSize">{320, 460}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<object class="NSColor" key="IBUIBackgroundColor" id="89236200">
+						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
 						</object>
@@ -84,7 +84,6 @@
 						<int key="IBUISeparatorStyle">1</int>
 						<int key="IBUISectionIndexMinimumDisplayRowCount">0</int>
 						<bool key="IBUIAllowsSelectionDuringEditing">YES</bool>
-						<bool key="IBUIShowsSelectionImmediatelyOnTouchBegin">YES</bool>
 						<float key="IBUIRowHeight">4.400000e+01</float>
 						<float key="IBUISectionHeaderHeight">1.000000e+01</float>
 						<float key="IBUISectionFooterHeight">1.000000e+01</float>
@@ -106,7 +105,7 @@
 					<object class="IBUITextField" id="719709506">
 						<reference key="NSNextResponder" ref="727578762"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 64}, {280, 31}}</string>
+						<string key="NSFrame">{{20, 48}, {280, 31}}</string>
 						<reference key="NSSuperview" ref="727578762"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -118,37 +117,20 @@
 							<bytes key="NSWhite">MAA</bytes>
 							<reference key="NSCustomColorSpace" ref="128995886"/>
 						</object>
+						<object class="NSFont" key="IBUIFont">
+							<string key="NSName">Helvetica</string>
+							<double key="NSSize">1.600000e+01</double>
+							<int key="NSfFlags">16</int>
+						</object>
 						<bool key="IBUIAdjustsFontSizeToFit">YES</bool>
-						<float key="IBUIMinimumFontSize">1.700000e+01</float>
+						<float key="IBUIMinimumFontSize">2.000000e+01</float>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits"/>
 						<int key="IBUIClearButtonMode">3</int>
 					</object>
-					<object class="IBUILabel" id="934957144">
+					<object class="IBUILabel" id="132140809">
 						<reference key="NSNextResponder" ref="727578762"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 35}, {280, 21}}</string>
-						<reference key="NSSuperview" ref="727578762"/>
-						<bool key="IBUIOpaque">NO</bool>
-						<bool key="IBUIClipsSubviews">YES</bool>
-						<bool key="IBUIUserInteractionEnabled">NO</bool>
-						<string key="IBUIText">Label</string>
-						<object class="NSColor" key="IBUITextColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAAA</bytes>
-						</object>
-						<object class="NSColor" key="IBUIHighlightedColor">
-							<int key="NSColorSpace">6</int>
-							<string key="NSCatalogName">System</string>
-							<string key="NSColorName">alternateSelectedControlTextColor</string>
-							<reference key="NSColor" ref="89236200"/>
-						</object>
-						<int key="IBUIBaselineAdjustment">1</int>
-						<float key="IBUIMinimumFontSize">1.000000e+01</float>
-					</object>
-					<object class="IBUILabel" id="154026003">
-						<reference key="NSNextResponder" ref="727578762"/>
-						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 103}, {391, 21}}</string>
+						<string key="NSFrame">{{20, 87}, {391, 21}}</string>
 						<reference key="NSSuperview" ref="727578762"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -283,7 +265,7 @@ ZYAAAAAAAAAAAAAAAAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDkAA</bytes
 			<object class="IBUIViewController" id="483447061">
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 			</object>
-			<object class="IBUIViewController" id="56475786">
+			<object class="IBUIViewController" id="866148683">
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics"/>
 			</object>
 		</object>
@@ -373,23 +355,15 @@ ZYAAAAAAAAAAAAAAAAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDkAA</bytes
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">view</string>
-						<reference key="source" ref="56475786"/>
+						<reference key="source" ref="866148683"/>
 						<reference key="destination" ref="727578762"/>
 					</object>
 					<int key="connectionID">40</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">label</string>
-						<reference key="source" ref="56475786"/>
-						<reference key="destination" ref="934957144"/>
-					</object>
-					<int key="connectionID">42</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">valueInput</string>
-						<reference key="source" ref="56475786"/>
+						<reference key="source" ref="866148683"/>
 						<reference key="destination" ref="719709506"/>
 					</object>
 					<int key="connectionID">43</int>
@@ -398,15 +372,15 @@ ZYAAAAAAAAAAAAAAAAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDkAA</bytes
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">editPropertyViewController</string>
 						<reference key="source" ref="483447061"/>
-						<reference key="destination" ref="56475786"/>
+						<reference key="destination" ref="866148683"/>
 					</object>
 					<int key="connectionID">44</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">validationError</string>
-						<reference key="source" ref="56475786"/>
-						<reference key="destination" ref="154026003"/>
+						<reference key="source" ref="866148683"/>
+						<reference key="destination" ref="132140809"/>
 					</object>
 					<int key="connectionID">46</int>
 				</object>
@@ -476,9 +450,8 @@ ZYAAAAAAAAAAAAAAAAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDkAA</bytes
 						<reference key="object" ref="727578762"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="934957144"/>
 							<reference ref="719709506"/>
-							<reference ref="154026003"/>
+							<reference ref="132140809"/>
 						</object>
 						<reference key="parent" ref="397714010"/>
 						<string key="objectName">Edit View</string>
@@ -489,18 +462,13 @@ ZYAAAAAAAAAAAAAAAAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDkAA</bytes
 						<reference key="parent" ref="727578762"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">36</int>
-						<reference key="object" ref="934957144"/>
-						<reference key="parent" ref="727578762"/>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">39</int>
-						<reference key="object" ref="56475786"/>
+						<reference key="object" ref="866148683"/>
 						<reference key="parent" ref="397714010"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">45</int>
-						<reference key="object" ref="154026003"/>
+						<reference key="object" ref="132140809"/>
 						<reference key="parent" ref="727578762"/>
 					</object>
 				</object>
@@ -522,7 +490,6 @@ ZYAAAAAAAAAAAAAAAAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDkAA</bytes
 					<string>34.IBEditorWindowLastContentRect</string>
 					<string>34.IBPluginDependency</string>
 					<string>35.IBPluginDependency</string>
-					<string>36.IBPluginDependency</string>
 					<string>39.CustomClassName</string>
 					<string>39.IBEditorWindowLastContentRect</string>
 					<string>39.IBPluginDependency</string>
@@ -541,12 +508,11 @@ ZYAAAAAAAAAAAAAAAAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDkAA</bytes
 					<string>DetailedCrudViewController</string>
 					<string>{{272, 265}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{346, 296}, {320, 460}}</string>
-					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+					<string>{{339, 295}, {320, 460}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>EditCrudPropertyViewController</string>
-					<string>{{5, 275}, {320, 480}}</string>
+					<string>{{11, 276}, {320, 480}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -572,7 +538,7 @@ ZYAAAAAAAAAAAAAAAAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDkAA</bytes
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">46</int>
+			<int key="maxID">47</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -607,13 +573,11 @@ ZYAAAAAAAAAAAAAAAAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDkAA</bytes
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSMutableArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>label</string>
 							<string>validationError</string>
 							<string>valueInput</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>UILabel</string>
 							<string>UILabel</string>
 							<string>UITextField</string>
 						</object>
@@ -623,10 +587,6 @@ ZYAAAAAAAAAAAAAAAAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMDkAA</bytes
 				<object class="IBPartialClassDescription">
 					<string key="className">ListedCrudViewController</string>
 					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">addAction:</string>
-						<string key="NS.object.0">id</string>
-					</object>
 					<object class="NSMutableDictionary" key="outlets">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSMutableArray" key="dict.sortedKeys">

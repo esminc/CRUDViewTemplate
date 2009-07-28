@@ -56,7 +56,6 @@
 @interface EditCrudPropertyViewController : UIViewController {
     NSManagedObject *managedObject;
     NSString *keyName;
-    IBOutlet UILabel *label;
     IBOutlet UITextField *valueInput;
     IBOutlet UILabel *validationError;
 }

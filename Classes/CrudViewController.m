@@ -23,13 +23,13 @@
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
+ - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+ if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+ // Custom initialization
+ }
+ return self;
+ }
+ */
 
 - (void)viewWillAppear:(BOOL)animated {
 	NSIndexPath* selectedPath = [tableView indexPathForSelectedRow];
@@ -46,9 +46,9 @@
     [super viewDidLoad];
     
     addButton = [[[UIBarButtonItem alloc]
-                 initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                 target:self
-                 action:@selector(addAction:)] retain];
+                  initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                  target:self
+                  action:@selector(addAction:)] retain];
     editButton = [[[UIBarButtonItem alloc]
                    initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
                    target:self
@@ -67,19 +67,19 @@
     
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
     self.title = [[entity name] stringByAppendingString: @" List"];
-
+    
 	[self.navigationItem setHidesBackButton:YES animated:NO];
     self.navigationItem.rightBarButtonItem = addButton;
     self.navigationItem.leftBarButtonItem = editButton;
 }
 
 /*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
+ // Override to allow orientations other than the default portrait orientation.
+ - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+ // Return YES for supported orientations
+ return (interfaceOrientation == UIInterfaceOrientationPortrait);
+ }
+ */
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -97,13 +97,13 @@
 	NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
 	NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
 	NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
-
+    
     detailedViewController.managedObject = newManagedObject;
     [detailedViewController setEditing:YES animated:NO];
     
     [newManagedObject setValue:@"HOGE FUGA" forKey:@"title"];
     [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-
+    
     UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:detailedViewController] autorelease];
     [self presentModalViewController:navigationController animated:YES];
 }
@@ -192,7 +192,7 @@
 
 - (NSArray *)attributes {
     NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
-
+    
     NSMutableArray *attributes = [[[NSMutableArray alloc] init] autorelease];
     for(NSPropertyDescription *property in [entity properties]) {
         if ([property isKindOfClass:[NSAttributeDescription class]]) {
@@ -245,13 +245,13 @@
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
+ - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+ if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+ // Custom initialization
+ }
+ return self;
+ }
+ */
 
 - (NSString *)title {
     return [[[managedObject entity] name] stringByAppendingString: @" Detail"];
@@ -260,26 +260,28 @@
 - (void)viewWillAppear:(BOOL)animated {
 	NSIndexPath* selectedPath = [tableView indexPathForSelectedRow];
 	if (selectedPath) [tableView deselectRowAtIndexPath:selectedPath animated:YES];
+    
     [tableView reloadData];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
 	[tableView flashScrollIndicators];
 }
 
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
     [super viewDidLoad];
+    tableView.allowsSelection = NO;
+    [self setEditing:NO animated:NO];
 }
 
 /*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
+ // Override to allow orientations other than the default portrait orientation.
+ - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+ // Return YES for supported orientations
+ return (interfaceOrientation == UIInterfaceOrientationPortrait);
+ }
+ */
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -310,7 +312,7 @@
     if (order = [listedViewController attributeShowingOrder]) {
         return [order count];
     }
-
+    
     NSEntityDescription *entity = [managedObject entity];
     
     NSMutableArray *attributes = [[[NSMutableArray alloc] init] autorelease];
@@ -355,7 +357,7 @@
     
     int section = [indexPath section];
     // int row = [indexPath row];
-   
+    
     cell.textLabel.text = [[managedObject valueForKey:[self attributeNameAtSectionIndex:section]] description];
     cell.accessoryType = UITableViewCellAccessoryNone;    
     cell.editingAccessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -381,76 +383,88 @@
     } else {
         keyName = [self attributeNameAtSectionIndex:section];
     }
-
+    
     [editPropertyViewController setUp:self.managedObject keyName:keyName];
     [self.navigationController pushViewController:editPropertyViewController animated:YES];
 }
 
 /*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
+ // Override to support conditional editing of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleNone;
 }
 
 /*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
+ // Override to support editing the table view.
+ - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ 
+ if (editingStyle == UITableViewCellEditingStyleDelete) {
+ // Delete the row from the data source
+ [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
+ }   
+ else if (editingStyle == UITableViewCellEditingStyleInsert) {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }   
+ }
+ */
 
 /*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
+ // Override to support rearranging the table view.
+ - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ }
+ */
 
 /*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
+ // Override to support conditional rearranging of the table view.
+ - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ // Return NO if you do not want the item to be re-orderable.
+ return YES;
+ }
+ */
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
+    [self.navigationItem setHidesBackButton:editing animated:animated];
+    [tableView setEditing:editing animated:animated];    
     
-    [self.navigationItem setHidesBackButton:editing animated:YES];
-
     if (editing) {
-        self.navigationItem.leftBarButtonItem = [[[UIBarButtonItem alloc]
-                                                  initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                                  target:self
-                                                  action:@selector(editCancel:)] autorelease];
-        self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
-                                                   initWithBarButtonSystemItem:UIBarButtonSystemItemDone
-                                                   target:self
-                                                   action:@selector(editDone:)] autorelease];
+        [self.navigationItem setLeftBarButtonItem:[[[UIBarButtonItem alloc]
+                                                    initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                    target:self
+                                                    action:@selector(editCancel:)] autorelease]
+                                         animated:animated];
+        [self.navigationItem setRightBarButtonItem:[[[UIBarButtonItem alloc]
+                                                     initWithBarButtonSystemItem:UIBarButtonSystemItemDone
+                                                     target:self
+                                                     action:@selector(editDone:)] autorelease]
+                                         animated:animated];
     } else {
+        [self.navigationItem setLeftBarButtonItem:nil animated:animated];
+        [self.navigationItem setRightBarButtonItem:[[[UIBarButtonItem alloc]
+                                                     initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                     target:self
+                                                     action:@selector(editAction:)] autorelease]
+                                          animated:animated];
     }
-    
-    [tableView setEditing:editing animated:animated];
+}
+
+- (void)editAction:(id)sender {
+    [self setEditing:YES animated:YES];
 }
 
 - (void)editDone:(id)sender {
+    [self setEditing:NO animated:YES];
     [self dismissModalViewControllerAnimated:YES];
 }
 
 - (void)editCancel:(id)sender {
+    [self setEditing:NO animated:YES];
     [managedObject.managedObjectContext deleteObject:managedObject];
     [self dismissModalViewControllerAnimated:YES];
 }
@@ -490,9 +504,9 @@
 - (void) setUp:(NSManagedObject*)aManagedObject keyName:(NSString*)aKeyName {
     self.managedObject = aManagedObject;
     self.keyName = aKeyName;
-    label.text = aKeyName;
     valueInput.text = [[aManagedObject valueForKey:aKeyName] description];
     validationError.hidden = YES;
+    self.navigationItem.title = aKeyName;
 }
 
 - (NSString*)classNameByKeyName:(NSString*)aKeyName {
@@ -514,7 +528,7 @@
         NSDate *date = [formatter dateFromString:stringValue];
         if (date == nil) {
             NSException *exception = [NSException exceptionWithName:@"CanNotFormatException"
-                                        reason:@"string value is not formatted." userInfo:nil];
+                                                             reason:@"string value is not formatted." userInfo:nil];
             @throw exception;
         }
         return date;
