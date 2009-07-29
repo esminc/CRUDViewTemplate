@@ -15,14 +15,17 @@
 
 @interface ListedCrudViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate> {
     NSFetchedResultsController *fetchedResultsController;
-    IBOutlet DetailedCrudViewController *detailedViewController;
-    IBOutlet UITableView *tableView;
     UIBarButtonItem *addButton;
     UIBarButtonItem *editButton;
-    UIBarButtonItem *doneEditingButton;    
+    UIBarButtonItem *doneEditingButton;
+    IBOutlet DetailedCrudViewController *detailedViewController;
+    IBOutlet UITableView *tableView;
 }
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
+@property (nonatomic, retain) UIBarButtonItem *addButton;
+@property (nonatomic, retain) UIBarButtonItem *editButton;
+@property (nonatomic, retain) UIBarButtonItem *doneEditingButton;
 
 - (NSArray *)attributeNames;
 - (NSArray *)attributeShowingOrder;

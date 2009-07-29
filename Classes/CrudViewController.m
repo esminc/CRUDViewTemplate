@@ -16,6 +16,9 @@
 @implementation ListedCrudViewController
 
 @synthesize fetchedResultsController;
+@synthesize addButton;
+@synthesize editButton;
+@synthesize doneEditingButton;
 
 - (id)init {
     return [super initWithNibName:@"CrudViewController" bundle:nil];
@@ -45,15 +48,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    addButton = [[[UIBarButtonItem alloc]
+    self.addButton = [[[UIBarButtonItem alloc]
                   initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
                   target:self
                   action:@selector(addAction:)] retain];
-    editButton = [[[UIBarButtonItem alloc]
+    self.editButton = [[[UIBarButtonItem alloc]
                    initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
                    target:self
                    action:@selector(editAction:)] retain]; 
-    doneEditingButton = [[[UIBarButtonItem alloc]
+    self.doneEditingButton = [[[UIBarButtonItem alloc]
                           initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                           target:self
                           action:@selector(doneEditingAction:)] retain];
@@ -69,8 +72,8 @@
     self.title = [[entity name] stringByAppendingString: @" List"];
     
 	[self.navigationItem setHidesBackButton:YES animated:NO];
-    self.navigationItem.rightBarButtonItem = addButton;
-    self.navigationItem.leftBarButtonItem = editButton;
+    self.navigationItem.rightBarButtonItem = self.addButton;
+    self.navigationItem.leftBarButtonItem = self.editButton;
 }
 
 /*
@@ -93,6 +96,17 @@
 	// e.g. self.myOutlet = nil;
 }
 
+- (void)setEditing:(BOOL)editting animated:(BOOL)animated {
+    [super setEditing:editting animated:animated];
+    [tableView setEditing:editting animated:animated];
+    
+    if (editting) {
+        [self.navigationItem setLeftBarButtonItem:self.doneEditingButton animated:animated];
+    } else {
+        [self.navigationItem setLeftBarButtonItem:self.editButton animated:animated];
+    }
+}
+
 - (void)addAction:(id)sender {
 	NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
 	NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
@@ -101,42 +115,36 @@
     detailedViewController.managedObject = newManagedObject;
     [detailedViewController setEditing:YES animated:NO];
     
-    [newManagedObject setValue:@"HOGE FUGA" forKey:@"title"];
-    [newManagedObject setValue:[NSDate date] forKey:@"timeStamp"];
-    
     UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:detailedViewController] autorelease];
     [self presentModalViewController:navigationController animated:YES];
 }
 
 - (void)editAction:(id)sender {
-    [tableView setEditing:YES animated:YES];
-    //[self.navigationItem setLeftBarButtonItem:nil animated:NO];
-    [self.navigationItem setLeftBarButtonItem:doneEditingButton animated:YES];    
+    [self setEditing:YES animated:YES];
 }
 
 - (void)doneEditingAction:(id)sender {
-    [tableView setEditing:NO animated:YES];
-    [self.navigationItem setLeftBarButtonItem:editButton animated:YES];
+    [self setEditing:NO animated:YES];
 }
 
 #pragma mark Table view methods
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
     return [[[self fetchedResultsController] sections] count];
 }
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
 	id <NSFetchedResultsSectionInfo> sectionInfo = [[[self fetchedResultsController] sections] objectAtIndex:section];
     return [sectionInfo numberOfObjects];
 }
 
 // Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"ListedCrudViewCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
@@ -148,7 +156,7 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller.
 	// AnotherViewController *anotherViewController = [[AnotherViewController alloc] initWithNibName:@"AnotherView" bundle:nil];
 	// [self.navigationController pushViewController:anotherViewController];
@@ -158,10 +166,10 @@
     
     [self.navigationController pushViewController:detailedViewController animated:YES];
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [aTableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the managed object for the given index path
         NSUInteger beforeSectionCount = [[fetchedResultsController sections] count];
@@ -177,9 +185,9 @@
         }
         
         if (beforeSectionCount > [[fetchedResultsController sections] count]) {
-            [tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
+            [aTableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
         } else {
-            [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+            [aTableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -224,7 +232,6 @@
 
 - (void)dealloc {
     [fetchedResultsController release];
-    [detailedViewController release];
     [addButton release];
     [editButton release];
     [doneEditingButton release];    
@@ -307,7 +314,7 @@
 
 #pragma mark Table view methods
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)aTableView {
     NSArray *order;
     if (order = [listedViewController attributeShowingOrder]) {
         return [order count];
@@ -329,7 +336,7 @@
 //    return [[NSArray alloc] initWithObjects:@"title", @"timeStamp", nil];
 //}
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+- (NSString *)tableView:(UITableView *)aTableView titleForHeaderInSection:(NSInteger)section {
     NSArray *names;
     if (names = [listedViewController attributeShowingNames]) {
         return [names objectAtIndex:section];
@@ -339,16 +346,16 @@
 }
 
 // Customize the number of rows in the table view.
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+- (NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section {
     return 1;
 }
 
 // Customize the appearance of table view cells.
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     static NSString *CellIdentifier = @"DetailedCrudViewCell";
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
@@ -365,10 +372,7 @@
     return cell;
 }
 
-// - (NSIndexPath *)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-// }
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)aTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here. Create and push another view controller.
 	// AnotherViewController *anotherViewController = [[AnotherViewController alloc] initWithNibName:@"AnotherView" bundle:nil];
 	// [self.navigationController pushViewController:anotherViewController];
@@ -390,19 +394,19 @@
 
 /*
  // Override to support conditional editing of the table view.
- - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+ - (BOOL)tableView:(UITableView *)aTableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
  // Return NO if you do not want the specified item to be editable.
  return YES;
  }
  */
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewCellEditingStyleNone;
 }
 
 /*
  // Override to support editing the table view.
- - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+ - (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
  
  if (editingStyle == UITableViewCellEditingStyleDelete) {
  // Delete the row from the data source
@@ -416,13 +420,13 @@
 
 /*
  // Override to support rearranging the table view.
- - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+ - (void)tableView:(UITableView *)aTableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
  }
  */
 
 /*
  // Override to support conditional rearranging of the table view.
- - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+ - (BOOL)tableView:(UITableView *)aTableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
  // Return NO if you do not want the item to be re-orderable.
  return YES;
  }
@@ -430,9 +434,9 @@
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated {
     [super setEditing:editing animated:animated];
-    [self.navigationItem setHidesBackButton:editing animated:animated];
-    [tableView setEditing:editing animated:animated];    
+    [tableView setEditing:editing animated:animated];
     
+    [self.navigationItem setHidesBackButton:editing animated:animated];
     if (editing) {
         [self.navigationItem setLeftBarButtonItem:[[[UIBarButtonItem alloc]
                                                     initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
@@ -454,26 +458,33 @@
     }
 }
 
+- (BOOL)isModal {
+    return self.navigationController.parentViewController ? YES : NO;
+}
+
 - (void)editAction:(id)sender {
     [self setEditing:YES animated:YES];
 }
 
 - (void)editDone:(id)sender {
     [self setEditing:NO animated:YES];
-    [self dismissModalViewControllerAnimated:YES];
+    
+    if ([self isModal]) {
+        [self dismissModalViewControllerAnimated:YES];
+    }
 }
 
 - (void)editCancel:(id)sender {
     [self setEditing:NO animated:YES];
-    [managedObject.managedObjectContext deleteObject:managedObject];
-    [self dismissModalViewControllerAnimated:YES];
+    
+    if ([self isModal]) {
+        [managedObject.managedObjectContext deleteObject:managedObject];
+        [self dismissModalViewControllerAnimated:YES];
+    }
 }
 
 - (void)dealloc {
     [managedObject release];
-    [listedViewController release];
-    [editPropertyViewController release];
-    [tableView release];
     [super dealloc];
 }
 
@@ -498,7 +509,7 @@
     self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc]
                                                initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                target:self
-                                               action:@selector(editDone:)] autorelease];    
+                                               action:@selector(editDone:)] autorelease];
 }
 
 - (void) setUp:(NSManagedObject*)aManagedObject keyName:(NSString*)aKeyName {
@@ -509,19 +520,35 @@
     self.navigationItem.title = aKeyName;
 }
 
-- (NSString*)classNameByKeyName:(NSString*)aKeyName {
+- (NSAttributeType)typeByKeyName:(NSString*)aKeyName {
     NSEntityDescription *entity = [managedObject entity];
     NSDictionary *attributes = [entity attributesByName];
     
     NSAttributeDescription *attribute = [attributes valueForKey:aKeyName];
     
-    return [attribute attributeValueClassName];
+    return [attribute attributeType];
 }
 
 - (id)toValueObjectFrom:(NSString*)stringValue keyName:(NSString*)aKeyName{
-    NSString *className = [self classNameByKeyName:aKeyName];
+    NSAttributeType type = [self typeByKeyName:aKeyName];
     
-    if ([className isEqual:@"NSDate"]) {
+    if (type == NSInteger16AttributeType) {
+        return [NSNumber numberWithInteger:[stringValue integerValue]];
+    } else if (type == NSInteger32AttributeType) {
+        return [NSNumber numberWithInteger:[stringValue integerValue]];
+    } else if (type == NSInteger64AttributeType) {
+        return [NSNumber numberWithInteger:[stringValue integerValue]];
+    } else if (type == NSDecimalAttributeType) {
+        return [NSNumber numberWithInteger:[stringValue integerValue]];
+    } else if (type == NSDoubleAttributeType) {
+        return [NSNumber numberWithDouble:[stringValue doubleValue]];
+    } else if (type == NSFloatAttributeType) {
+        return [NSNumber numberWithFloat:[stringValue floatValue]];
+    } else if (type == NSStringAttributeType) {
+        return stringValue;
+    } else if (type == NSBooleanAttributeType) {
+        return [NSNumber numberWithBool:[stringValue boolValue]];
+    } else if (type == NSDateAttributeType) {
         NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
         [formatter setTimeStyle:NSDateFormatterFullStyle];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
@@ -532,9 +559,9 @@
             @throw exception;
         }
         return date;
+    } else {
+        return stringValue;
     }
-    
-    return stringValue;
 }
 
 - (void)setValueFromValueInput {

@@ -42,11 +42,7 @@
     listViewController.fetchedResultsController = aFetchedResultsController;
     
     [navigationController pushViewController:listViewController animated:YES];
-    
-    // NSManagedObject *event = (NSManagedObject *)[NSEntityDescription insertNewObjectForEntityForName: @"Event" inManagedObjectContext: self.managedObjectContext];
-    // [event setValue:@"HOGE FUGA" forKey:@"title"];
-    // [event setValue:[NSDate date] forKey:@"timeStamp"];
-    
+
     [window addSubview:[navigationController view]];
 	[window makeKeyAndVisible];
 }
@@ -161,7 +157,7 @@
 #pragma mark Memory management
 
 - (void)dealloc {
-	
+
     [managedObjectContext release];
     [managedObjectModel release];
     [persistentStoreCoordinator release];
