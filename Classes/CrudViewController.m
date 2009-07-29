@@ -63,7 +63,9 @@
     
     NSError *error;
 	if (![self.fetchedResultsController performFetch:&error]) {
-		// Handle the error...
+        // Update to handle the error appropriately.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        exit(-1);  // Fail
 	}
     
     self.fetchedResultsController.delegate = self;
