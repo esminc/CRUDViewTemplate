@@ -114,8 +114,7 @@
 	NSEntityDescription *entity = [[self.fetchedResultsController fetchRequest] entity];
 	NSManagedObject *newManagedObject = [NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:context];
     
-    detailedViewController.managedObject = newManagedObject;
-    [detailedViewController setEditing:YES animated:NO];
+    [detailedViewController setupManagedObject:newManagedObject isAdding:YES];
     
     UINavigationController *navigationController = [[[UINavigationController alloc] initWithRootViewController:detailedViewController] autorelease];
     [self presentModalViewController:navigationController animated:YES];
@@ -163,8 +162,8 @@
 	// AnotherViewController *anotherViewController = [[AnotherViewController alloc] initWithNibName:@"AnotherView" bundle:nil];
 	// [self.navigationController pushViewController:anotherViewController];
 	// [anotherViewController release];
-    
-    detailedViewController.managedObject = [[self fetchedResultsController] objectAtIndexPath:indexPath];
+
+    [detailedViewController setupManagedObject:[[self fetchedResultsController] objectAtIndexPath:indexPath] isAdding:NO];
     
     [self.navigationController pushViewController:detailedViewController animated:YES];
     
@@ -251,6 +250,8 @@
 @implementation DetailedCrudViewController
 
 @synthesize managedObject;
+@synthesize temporaryManagedObjectContext;
+@synthesize isAdding;
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -440,11 +441,15 @@
     
     [self.navigationItem setHidesBackButton:editing animated:animated];
     if (editing) {
-        [self.navigationItem setLeftBarButtonItem:[[[UIBarButtonItem alloc]
-                                                    initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                                    target:self
-                                                    action:@selector(editCancel:)] autorelease]
-                                         animated:animated];
+        if ([self isAdding]) {
+            [self.navigationItem setLeftBarButtonItem:[[[UIBarButtonItem alloc]
+                                                        initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                        target:self
+                                                        action:@selector(editCancel:)] autorelease]
+                                             animated:animated];
+        } else {
+            [self.navigationItem setLeftBarButtonItem:nil animated:animated];
+        }
         [self.navigationItem setRightBarButtonItem:[[[UIBarButtonItem alloc]
                                                      initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                      target:self
@@ -460,10 +465,6 @@
     }
 }
 
-- (BOOL)isModal {
-    return self.navigationController.parentViewController ? YES : NO;
-}
-
 - (void)editAction:(id)sender {
     [self setEditing:YES animated:YES];
 }
@@ -471,7 +472,7 @@
 - (void)editDone:(id)sender {
     [self setEditing:NO animated:YES];
     
-    if ([self isModal]) {
+    if ([self isAdding]) {
         [self dismissModalViewControllerAnimated:YES];
     }
 }
@@ -479,14 +480,21 @@
 - (void)editCancel:(id)sender {
     [self setEditing:NO animated:YES];
     
-    if ([self isModal]) {
+    if ([self isAdding]) {
         [managedObject.managedObjectContext deleteObject:managedObject];
         [self dismissModalViewControllerAnimated:YES];
     }
 }
 
+- (void)setupManagedObject:(NSManagedObject*)aManagedObject isAdding:(BOOL)adding{
+    self.managedObject = aManagedObject;
+    self.isAdding = adding;
+    [self setEditing:self.isAdding animated:NO];    
+}
+
 - (void)dealloc {
     [managedObject release];
+    [temporaryManagedObjectContext release];
     [super dealloc];
 }
 

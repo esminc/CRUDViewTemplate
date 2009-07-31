@@ -42,12 +42,18 @@
 
 @interface DetailedCrudViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
     NSManagedObject* managedObject;
+    NSManagedObjectContext *temporaryManagedObjectContext;
     IBOutlet ListedCrudViewController *listedViewController;
     IBOutlet EditCrudPropertyViewController *editPropertyViewController;
     IBOutlet UITableView *tableView;
+    BOOL isAdding;
 }
 
 @property (nonatomic, retain) NSManagedObject *managedObject;
+@property (nonatomic, retain) NSManagedObjectContext *temporaryManagedObjectContext;
+@property (nonatomic, assign) BOOL isAdding;
+
+- (void)setupManagedObject:(NSManagedObject*)aManagedObject isAdding:(BOOL)adding;
 
 @end
 
