@@ -1,0 +1,61 @@
+INTRODUCTION
+
+This tool is a CRUD base view template for Core Data on iPhone SDK.
+
+LEGAL
+
+CrudViewTemplate is copyrighted open-source software
+that is released under the MIT Lincence.
+For details on the lisence, see the LICENSE file.
+
+INSTALLATION
+
+1. shutdown Xcode.
+2. command make & install.
+  $ ./make_template
+  $ ./install_template
+
+HOW TO USE
+
+1. startup Xcode.
+2. generate any "Navigation-based Application (use Core Data)" project. (e.g. named 'CustomerManagement')
+3. make any Model.
+   (e.g. CustomerManagement.xcdatamodel)
+   entity 'Customer' has attributes
+   'name' as String, default value is 'new'
+   'signupDay' as Date. default value is '2000-01-01 00:00:00 +9000'
+
+4. select "Classes" group & open "New Files" & select "User Templates" - "Cocoa Touch Class".
+5. generate "CrudViewController subclass". (e.g. named 'CustomerViewController')
+6. import CrudViewController subclass.
+   (e.g. CustomerManagementAppDelegate.m)
+
+    #import "CustomerViewController.h"
+
+7. setup ListedViewController.
+   (e.g. - applicationDidFinishLaunching:)
+
+    //// initialize
+    ListedCustomerViewController *listViewController = [[ListedCustomerViewController alloc] init];
+    //// set up FetchedResultController
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Customer" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSArray *sortDescriptors = [[NSArray alloc] initWithObjects:sortDescriptor, nil];
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:managedObjectContext sectionNameKeyPath:nil cacheName:@"Root"];
+    listViewController.fetchedResultsController = aFetchedResultsController;
+    //// push to NavigationController
+    [navigationController pushViewController:listViewController animated:YES];
+
+    [window addSubview:[navigationController view]];
+    [window makeKeyAndVisible];
+   
+8. run, so application show CRUD view.
+
+UNINSTRATION
+
+1. shutdown Xcode.
+2. command make & install.
+  $ ./uninstall_template
