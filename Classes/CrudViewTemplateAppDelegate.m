@@ -20,7 +20,7 @@
 
 - (void)applicationDidFinishLaunching:(UIApplication *)application {    
     
-    ListedCrudViewController *listViewController = [[ListedCrudViewController alloc] init];
+    ListedCrudViewController *listViewController = [[[ListedCrudViewController alloc] init] autorelease];
     
     // Create the fetch request for the entity.
 	NSFetchRequest *fetchRequest = [[[NSFetchRequest alloc] init] autorelease];
